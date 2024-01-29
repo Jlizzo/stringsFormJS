@@ -1,0 +1,117 @@
+    //'form' retrieves information from the HTML form
+    const form = document.getElementById('form');
+
+    //'first' retrieves user input from the FIRST NAME text entry feild
+    const first = document.getElementById('firstName');
+
+    //'last' retrieves user input from the LAST NAME text entry feild
+    const last = document.getElementById('lastName');
+
+    //'zip' retrieves user input from the ZIP text entry feild
+    const zip = document.getElementById('zip');
+
+    //'addEventListener' is supposed to colled user input when SUBMIT button is clicked. But i think it may be broken. 
+    form.addEventListener('submit', (e) => {
+
+        //'preventDefault' prevents unwanted default actions to occur upon clicking SUBMIT button
+        e.preventDefault();
+
+        //'verifyUser' is the function called when SUBMIT button is clicked
+        verifyUser();
+    });
+
+      //from what i understand, 'const verifyUser' with the arrow function acts as a function for the connected form 
+      //and the arrow is to shorten the code needed to perform said function
+      const verifyUser = () => { 
+
+        //'firstVal' collects the info from the FIRST variable listed above, removes the whitespace and checks that it is Not a Number
+        const firstVal = first.value.trim.isNaN();
+
+        //'lastVal' collects the info from the LAST variable listed above, removes the whitespace and checks that it is Not a Number
+        const lastVal = last.value.trim.isNaN();
+
+        //'zipVal' collects the info from the ZIP variable listed above, removes the whitespace and checks that it is Not a Number
+        const zipVal = zip.value.isNumeric();
+
+        //'validName' is supposed to add firstVal, lastVal and a space
+        const validName = (firstVal + ' ' + lastVal);
+
+        //'validateName' is supposed to evaluate validName, determine its length and check that the string is less than or equal to 20 characters
+        let validateName = validName.length <= 20;
+
+        //'validZipcode' is supposed to evaluate the length of the zipVal string and verify that it is 4 characters long
+        let validZipcode = zipVal.length = 4;
+
+        //I know this variable has to be used in a loop for determining the string lengths of validZipcode and validateName 
+        //but I'll need more time to figure it out. I already have 2.5 pages of trial and error on this one, lol
+        let i = 0;
+
+        //This IF/ELSE IF/ELSE statement was an attempt to combine the firstVal and lastVal error message outputs. it does not work, so
+        // i will have to rework it so that they are not combined.
+        if(firstVal === '' || lastVal === '') {
+
+            //supposed to call to the FIRST input feild and displays corresponding error message if above criteria are not met
+            setError(first, 'First Name is required');
+
+            //supposed to call to the LAST input feild and displays corresponding error message if above criteria are not met
+            setError(last, 'Last Name is required');
+
+        //if validateName string is greater than 20 characters this statement is supposed to trigger error messages
+        }else if (validateName > 20){
+
+            //supposed to call to the FIRST input feild and displays corresponding error message if above criteria are not met
+            setError(first, 'Invalid Entry');
+
+            //supposed to call to the LAST input feild and displays corresponding error message if above criteria are not met
+            setError(last, 'Invalid Entry');
+        //everything else should be valid
+        }else{
+            //supposed to call to the FIRST input feild and inform a successful entry
+            setSuccess(first);
+
+            //supposed to call to the FIRST input feild and inform a successful entry
+            setSuccess(last);
+        }
+        //if zipVal string equals no character entry or validZipcode does not equal 4 characters long, this 
+        //statement is supposed to trigger error messages
+        if(zipVal === '' || validZipcode != 4) {
+
+            //supposed to call the ZIP input feild and display corresponding error message if above criteria are not met
+            setError(zip, 'Invalid Zipcode');
+
+            //everything else should be valid
+        }else{ 
+
+            //supposed to call to the ZIP input feild and inform a successful entry
+            setSuccess(zip);
+        }
+    };
+    
+    //connects the HTML page error <div> class areas to the error parameters in the function
+    const setError = (element, message) => {
+
+        //connects to the inputControl class that wraps the data entry feilds
+        const inputControl = element.parentElement;
+        
+        //pinpoints the 'error' parts of the inputControl wrap to display messages
+        const errorDisplay = inputControl.querySelector('.error');
+    
+        //displays error message
+        errorDisplay.innerText = message;
+    }
+
+    //connects the HTML page elements in <div> class areas to the error parameters in the function
+    const setSuccess = element => {
+
+        //connects to the inputControl class that wraps the data entry feilds
+        const inputControl = element.parentElement;
+
+        //pinpoints the 'error' parts of the inputControl wrap 
+        const errorDisplay = inputControl.querySelector('.error');
+        
+        //does NOT display message if appropriate criteria are met
+        errorDisplay.innerText = '';
+    };
+    
+   
+  
